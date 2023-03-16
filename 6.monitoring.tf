@@ -71,7 +71,7 @@ resource "time_sleep" "wait_grafana" {
 # since helm chart ingress gives problems we have to create it by our own
 resource "kubernetes_ingress_v1" "grafana_ingress" {
   metadata {
-    name = "grafana"
+    name = "grafana-ingress"
     namespace = "monitoring"
     annotations = {
         "alb.ingress.kubernetes.io/load-balancer-name" = "grafana-ingress"
