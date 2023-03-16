@@ -26,7 +26,7 @@ resource "aws_iam_role_policy_attachment" "amazon-eks-cluster-policy" {
 
 # cluster
 resource "aws_eks_cluster" "cluster" {
-  name     = var.cluster_name
+  name     = "${var.projname_short}-cluster"
   version  = var.cluster_version
   role_arn = aws_iam_role.eks-cluster.arn
 
@@ -37,6 +37,10 @@ resource "aws_eks_cluster" "cluster" {
       aws_subnet.public_sub_a.id,
       aws_subnet.public_sub_b.id
     ]
+  }
+
+  tags = {
+    Name = "${var.projname_short}-cluster"
   }
 
   depends_on = [aws_iam_role_policy_attachment.amazon-eks-cluster-policy]
@@ -100,6 +104,10 @@ resource "aws_eks_node_group" "private_nodes" {
 
   labels = {
     role = "general"
+  }
+
+  tags = {
+    Name = "${var.projname_short}-nodes"
   }
 
   depends_on = [

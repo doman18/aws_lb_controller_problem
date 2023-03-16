@@ -5,7 +5,7 @@ resource "aws_subnet" "private_sub_a" {
   availability_zone = "${var.region}a"
 
   tags = {
-    "Name"                                      = "private-${var.region}a"
+    "Name"                                      = "${var.projname_short}-private-${var.region}a"
     "kubernetes.io/role/internal-elb"           = "1"
     "kubernetes.io/cluster/${var.cluster_name}" = "owned"
   }
@@ -17,7 +17,7 @@ resource "aws_subnet" "private_sub_b" {
   availability_zone = "${var.region}b"
 
   tags = {
-    "Name"                                      = "private-${var.region}b"
+    "Name"                                      = "${var.projname_short}-private-${var.region}b"
     "kubernetes.io/role/internal-elb"           = "1"
     "kubernetes.io/cluster/${var.cluster_name}" = "owned"
   }
@@ -30,7 +30,7 @@ resource "aws_subnet" "public_sub_a" {
   map_public_ip_on_launch = true
 
   tags = {
-    "Name"                                      = "public-${var.region}a"
+    "Name"                                      = "${var.projname_short}-public-${var.region}a"
     "kubernetes.io/role/elb"                    = "1"
     "kubernetes.io/cluster/${var.cluster_name}" = "owned"
   }
@@ -43,7 +43,7 @@ resource "aws_subnet" "public_sub_b" {
   map_public_ip_on_launch = true
 
   tags = {
-    "Name"                                      = "public-${var.region}b"
+    "Name"                                      = "${var.projname_short}-public-${var.region}b"
     "kubernetes.io/role/elb"                    = "1"
     "kubernetes.io/cluster/${var.cluster_name}" = "owned"
   }
@@ -55,7 +55,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "igw"
+    Name = "${var.projname_short}-igw"
   }
 }
 
@@ -64,7 +64,7 @@ resource "aws_eip" "nat" {
   vpc = true
 
   tags = {
-    Name = "nat"
+    Name = "${var.projname_short}-nat-eip"
   }
 }
 
@@ -73,7 +73,7 @@ resource "aws_nat_gateway" "nat" {
   subnet_id     = aws_subnet.public_sub_a.id
 
   tags = {
-    Name = "nat"
+    Name = "${var.projname_short}-nat"
   }
 
   depends_on = [aws_internet_gateway.igw]
@@ -89,7 +89,7 @@ resource "aws_route_table" "private" {
   }
 
   tags = {
-    Name = "private"
+    Name = "${var.projname_short}-private-route"
   }
 }
 
@@ -102,7 +102,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name = "public"
+    Name = "${var.projname_short}-public-route"
   }
 }
 
