@@ -7,7 +7,8 @@ Based on https://github.com/antonputra/tutorials/tree/main/lessons/112/terraform
 
 To replicate problem
 ```
-terraform apply # most probably you will get prometheus error about 
+terraform init
+terraform apply # most probably you will get prometheus error 
 
 terraform destroy
 # resource kubernetes_ingress_v1.grafana_ingress would not be destroyed
