@@ -1,0 +1,48 @@
+ingress:
+  # disabled because of problems with deleting and tracking down this resource for route53 
+  enabled: false
+initChownData:
+  enabled: false
+
+persistence:
+  enabled: true
+  # did not work with efs, volume was mounted but container returned mounting errors
+  storageClassName: "gp2"
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://prometheus-server
+      access: proxy
+      isDefault: true
+    - name: Loki
+      type: loki
+      url: http://loki:3100
+      access: proxy
+
+dashboardProviders:
+  dashboardproviders.yaml:
+    apiVersion: 1
+    providers:
+    - name: 'default'
+      orgId: 1
+      folder: ''
+      type: file
+      disableDeletion: false
+      editable: true
+      options:
+        path: /var/lib/grafana/dashboards/default
+
+dashboards:
+  default:
+    kubernetes:
+      gnetId: 10000
+      revision: 1
+      datasource: Prometheus
+    ingress:
+      gnetId: 9614
+      revision: 1
+      datasource: Prometheus

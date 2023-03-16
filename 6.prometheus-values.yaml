@@ -1,0 +1,11 @@
+server:
+  persistentVolume:
+    storageClass: "gp2"
+
+alertmanager:
+  # https://github.com/prometheus-community/helm-charts/issues/2880
+  extraArgs:
+    cluster.advertise-address: "[$(POD_IP)]:9093"
+
+  persistence:
+    storageClass: "gp2"
