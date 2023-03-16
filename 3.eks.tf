@@ -1,6 +1,6 @@
 ########################################    CONTROL PLANE   ###################################### 
 resource "aws_iam_role" "eks-cluster" {
-  name = "eks-cluster-${var.cluster_name}"
+  name = "${var.projname_short}-eks-cluster-role"
 
   assume_role_policy = <<POLICY
 {
@@ -49,7 +49,7 @@ resource "aws_eks_cluster" "cluster" {
 
 ########################################    WORKERS   ###################################### 
 resource "aws_iam_role" "nodes" {
-  name = "eks-node-group-nodes"
+  name = "${var.projname_short}-eks-node-group-role"
 
   assume_role_policy = jsonencode({
     Statement = [{

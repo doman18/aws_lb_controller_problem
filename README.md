@@ -13,7 +13,8 @@ terraform init
 terraform apply # most probably you will get prometheus error, just repeat terraform apply
 ```
 
-2. Get the kubeconfig for your cluster
+2. Get the kubeconfig for your cluster (MANDATORY!)
+Without this you wont be able to destroy resources manually.
 ```
 aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)
 ```
